@@ -7,12 +7,10 @@
 #PLUGINCONTRIBDIR="."
 
 PLUGINCONTRIBDIR="/usr/lib/nagios/plugins/contrib"
-CUSTOM_COMMAND_FILE="$PLUGINCONTRIBDIR/processes_to_check.txt"
+#CUSTOM_COMMAND_FILE="$PLUGINCONTRIBDIR/processes_to_check.txt"
+CUSTOM_COMMAND_FILE="./example_config.txt"
 
 EXIT_OK=0
-EXIT_WARNING=1
-EXIT_CRITICAL=2
-EXIT_UNKOWN=3
 
 OUTPUT=""
 ERROR_OUTPUT=""
@@ -20,19 +18,19 @@ declare -g RESULT
 RESULT=$EXIT_OK
 
 set_result() {
-	if [ $1 -gt $RESULT ]; then
+	if [ "$1" -gt "$RESULT" ]; then
 		RESULT=$1
 	fi
 }
 
 set_output() {
-	if [ $1 -eq 1 ]; then
+	if [ "$1" -eq 1 ]; then
 		ERROR_OUTPUT+="[Warning] $2"
 		ERROR_OUTPUT+='\n'
-	elif [ $1 -eq 2 ]; then
+	elif [ "$1" -eq 2 ]; then
 		ERROR_OUTPUT+="[Critical] $2"
 		ERROR_OUTPUT+='\n'
-	elif [ $1 -ge 2 ]; then
+	elif [ "$1" -ge 2 ]; then
 		ERROR_OUTPUT+="[Unkown] $2"
 		ERROR_OUTPUT+='\n'
 	else
@@ -47,7 +45,7 @@ if [ ! -f  $CUSTOM_COMMAND_FILE ]; then
 fi
 
 while read line; do
-	TMP=$(eval $line)
+	TMP=$(eval "$line")
 	TMP_RESULT=$?
 	set_result $TMP_RESULT
 	set_output $TMP_RESULT "$TMP"
@@ -60,4 +58,4 @@ if [ -n "$OUTPUT" ]; then
 	echo -e "$OUTPUT"
 fi
 
-exit $RESULT
+exit "$RESULT"
