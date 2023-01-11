@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 # For debugging
-#set -x
+# set -x
 
 # For testing
-#PLUGINCONTRIBDIR="."
+# PLUGINCONTRIBDIR="."
 
-PLUGINCONTRIBDIR="/usr/lib/nagios/plugins/contrib"
-#CUSTOM_COMMAND_FILE="$PLUGINCONTRIBDIR/processes_to_check.txt"
+# PLUGINCONTRIBDIR="/usr/lib/nagios/plugins/contrib"
+# CUSTOM_COMMAND_FILE="$PLUGINCONTRIBDIR/processes_to_check.txt"
 CUSTOM_COMMAND_FILE="./example_config.txt"
 
 EXIT_OK=0
@@ -44,7 +44,7 @@ if [ ! -f  $CUSTOM_COMMAND_FILE ]; then
 	exit 0
 fi
 
-while read line; do
+while read -r line; do
 	TMP=$(eval "$line")
 	TMP_RESULT=$?
 	set_result $TMP_RESULT
