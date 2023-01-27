@@ -1,6 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# For debugging
+# A small plugin to execute multiple plugin calls
+# definend in a local file. Essentially a simpler check_multi.
+
+# For debugging enable the following
 # set -x
 
 # For testing
